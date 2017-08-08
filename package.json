@@ -1,0 +1,34 @@
+{
+  "name": "quickprojects",
+  "version": "1.1.2",
+  "description": "QuickProjects makes it easy to create templates for programming projects without having to use an IDE.",
+  "main": "QP.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "QP":"QP.js",
+    "JavaProject":"JavaProject.js",
+    "CppProject":"CppProject.js",
+    "CProject":"CProject.js",
+    "KotlinProject":"KotlinProject.js",
+    "LWJGLProject":"LWJGLProject.js"
+  },
+  "keywords": [
+    "QP",
+    "Quick",
+    "Projects",
+    "IDE",
+    "Template"
+  ],
+  "repository": {
+    "url": "https://github.com/Authman2/QuickProjects"
+  },
+  "author": "Adeola Uthman",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^2.1.0",
+    "fs-extra": "^4.0.1",
+    "shelljs": "^0.7.8"
+  }
+}
