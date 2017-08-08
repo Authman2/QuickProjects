@@ -6,7 +6,7 @@ var fs = require('fs-extra');
 var shelljs = require('shelljs');
 
 var command = process.argv[2] || 'help';
-
+var option = process.argv[3] || null;
 
 switch (command) {
     case 'help':
@@ -17,6 +17,9 @@ switch (command) {
         break;
     case 'update':
         updateQP();
+        break;
+    case 'run-c':
+        runC(option);
         break;
     default:
         break;
@@ -75,7 +78,10 @@ function printHelpCommands() {
     console.log('--------------------------------------------------------');
     console.log('RUNNING C PROJECTS: ');
     console.log('--------------------------------------------------------');
-    console.log('Navigate to your project folder and type, ' + chalk.cyan('./gradlew build') );
+    console.log( chalk.magenta('Option 1:') );
+    console.log('--> Navigate to your project folder and type ' + chalk.cyan('QP run-c') + chalk.yellow(' [main file]') );
+    console.log( chalk.magenta('Option 2:') );
+    console.log('--> Type ' + chalk.cyan('gradle build') + ' then navigate to the build/exe/main folder and run your main file.');
 
 
     console.log();
@@ -86,4 +92,41 @@ function printHelpCommands() {
     console.log('For help, type ' + chalk.cyan('QP help'));
     console.log('To update QuickProjects, type ' + chalk.cyan('QP update'));
     console.log('To uninstall QuickProjects, type ' + chalk.cyan('QP uninstall'));
+    console.log();
+}
+
+
+
+/**
+* 
+* RUNNING PROJECTS.
+* 
+* It is not required that you use these commands. They are just here to make 
+* things easier for you.
+*/
+
+// Builds and runs a C project.
+function runC(opt) {
+    if(fs.existsSync('build.gradle')) {
+
+        // Build the project
+        shelljs.exec('gradle build');
+
+        // Run the project.
+        if(opt !== null) {
+            // Here, 'opt' will be the name of the main file.
+            if(fs.existsSync('./build/exe/main/' + opt)) {
+                shelljs.exec('./build/exe/main/' + opt);
+            } else {
+                console.log( chalk.red('\nThere is no file with the name ' + opt) + '. Make sure that you typed the name correctly and try again.' );
+                return;
+            }
+        } else {
+            shelljs.exec('./build/exe/main/main');
+        }
+
+    } else {
+        console.log( chalk.red('Could not find a gradle file in this directory to build from.') );
+        return;
+    }
 }

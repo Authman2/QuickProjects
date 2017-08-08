@@ -49,4 +49,5 @@ console.log( chalk.green('Generated build.gradle file!') );
 
 console.log('\nFinished creating ' + chalk.magenta(projectName) + ' in ' + chalk.cyan('./' + projectName) );
 console.log('To run your application, navigate to your project folder with '
-    + chalk.cyan('cd ' + projectName) + ',\nThen type ' + chalk.cyan('./gradlew build') );
+    + chalk.cyan('cd ' + projectName) + ',\nThen type ' + chalk.cyan('gradle build') + ' to build the project.');
+console.log('To run the project, either type ' + chalk.cyan('QP run-c') + chalk.yellow(' [main file]') + ' or navigate to the build/exe/main folder and run your main file.');
