@@ -10,6 +10,7 @@ var buildTool = process.argv[3] || "gradle";
 
 
 // Tell the user that the project is being created.
+console.log();
 console.log('Creating a new Java project named ' + chalk.magenta(projectName) );
 
 
@@ -22,7 +23,7 @@ try {
 }
 
 
-// Make the src, resources, and external jars folders.
+// Make the src, resources folders.
 console.log( chalk.blue('Creating src folder...') );
 try {
     fs.ensureDirSync('./' + projectName + '/src/main/java/mainPackage');
@@ -35,14 +36,6 @@ console.log( chalk.blue('\nCreating resources folder...') );
 try {
     fs.ensureDirSync('./' + projectName + '/src/resources');
     console.log( chalk.green('Done creating resources folder!') );
-} catch(err) {
-    console.log( chalk.red("ERROR: " + err) );
-};
-
-console.log( chalk.blue('\nCreating jars folder...') );
-try {
-    fs.ensureDirSync('./' + projectName + '/jars');
-    console.log( chalk.green('Done creating jars folder!') );
 } catch(err) {
     console.log( chalk.red("ERROR: " + err) );
 };

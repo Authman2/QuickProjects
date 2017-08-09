@@ -1,18 +1,18 @@
 {
   "name": "quickprojects",
-  "version": "1.1.55",
+  "version": "1.2.3",
   "description": "QuickProjects makes it easy to create templates for programming projects without having to use an IDE.",
   "main": "QP.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
-    "QP":"QP.js",
-    "JavaProject":"JavaProject.js",
-    "CppProject":"CppProject.js",
-    "CProject":"CProject.js",
-    "KotlinProject":"KotlinProject.js",
-    "LWJGLProject":"LWJGLProject.js"
+    "QP": "QP.js",
+    "JavaProject": "JavaProject.js",
+    "CppProject": "CppProject.js",
+    "CProject": "CProject.js",
+    "KotlinProject": "KotlinProject.js",
+    "LWJGLProject": "LWJGLProject.js"
   },
   "keywords": [
     "QP",
@@ -29,6 +29,7 @@
   "dependencies": {
     "chalk": "^2.1.0",
     "fs-extra": "^4.0.1",
-    "shelljs": "^0.7.8"
+    "shelljs": "^0.7.8",
+    "xml2js": "^0.4.17"
   }
 }

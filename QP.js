@@ -4,9 +4,10 @@
 var chalk = require('chalk');
 var fs = require('fs-extra');
 var shelljs = require('shelljs');
+var xml2js = require('xml2js');
 
 var command = process.argv[2] || 'help';
-var option = process.argv[3] || null;
+var mainFile = process.argv[3] || null;
 
 switch (command) {
     case 'help':
@@ -18,9 +19,12 @@ switch (command) {
     case 'update':
         updateQP();
         break;
+    
     case 'run-c':
-        runC(option);
+        runC(mainFile);
         break;
+    case 'run-java':
+        runJava(mainFile);
     default:
         break;
 }
@@ -70,6 +74,7 @@ function printHelpCommands() {
     console.log('--------------------------------------------------------');
     console.log('RUNNING JAVA PROJECTS: ');
     console.log('--------------------------------------------------------');
+    console.log('--> Navigate to your project folder and type ' + chalk.cyan('QP run-java') + chalk.yellow(' [main file]') );
     console.log('--> MAVEN: Navigate to your project folder and type, ' + chalk.cyan('mvn package') + ', and then, ' + chalk.cyan('java -cp target/{PROJECT-NAME}-1.0.jar {PACKAGE-NAME}.{MAIN-FILE}'));
     console.log('--> GRADLE: Navigate to your project folder and type, ' + chalk.cyan('gradle run') + ', or ' + chalk.cyan('gradle jfxRun') + ' for javafx projects.');
 
@@ -97,7 +102,7 @@ function printHelpCommands() {
 
 
 
-/**
+/*
 * 
 * RUNNING PROJECTS.
 * 
@@ -105,25 +110,72 @@ function printHelpCommands() {
 * things easier for you.
 */
 
-// Builds and runs a C project.
+
+/** Builds and runs a C project.
+* @param {string} opt opt: The name of the main file.
+*/
 function runC(opt) {
     if(fs.existsSync('build.gradle')) {
-
-        // Build the project
-        shelljs.exec('gradle build');
 
         // Run the project.
         if(opt !== null) {
             // Here, 'opt' will be the name of the main file.
             if(fs.existsSync('./build/exe/main/' + opt)) {
-                shelljs.exec('./build/exe/main/' + opt);
+                shelljs.exec('open ./build/exe/main/' + opt);
             } else {
                 console.log( chalk.red('\nThere is no file with the name ' + opt) + '. Make sure that you typed the name correctly and try again.' );
                 return;
             }
         } else {
-            shelljs.exec('./build/exe/main/main');
+            shelljs.exec('open ./build/exe/main/main');
         }
+
+    } else {
+        console.log( chalk.red('Could not find a gradle file in this directory to build from.') );
+        return;
+    }
+}
+
+
+/** Builds and runs a Java project. 
+* @param {string} opt opt: The name of the main file. Only for maven projects.
+*/
+function runJava(opt = 'Main') {
+    if(fs.existsSync('build.gradle')) {
+
+        // Build and run the project.
+        shelljs.exec('gradle run');
+
+    } 
+    else if(fs.existsSync('pom.xml')) {
+        
+        var parser = new xml2js.Parser();
+        fs.readFile('pom.xml', (err, data) => {
+            if(err) { console.log( chalk.red('There was an error parsing your pom.xml file.') ); return; }
+            parser.parseString(data, (err, result) => {
+                var groupID = result['project']['groupId'];
+                var name = result['project']['artifactId'];
+
+                shelljs.exec('mvn clean package');
+
+                // Here, 'opt' will be the name of the main file.
+                if(opt !== null) {
+                    if(fs.existsSync('./target/' + name + '-1.0.jar')) {
+                        shelljs.exec('java -cp target/' + name + '-1.0.jar ' + groupID + '.' + opt);
+                    } else {
+                        console.log( chalk.red('\nThere is no file with the name ' + opt) + '. Make sure that you typed the name correctly and try again.' );
+                        return;
+                    }
+                } else {
+                    if(fs.existsSync('./target/' + name + '-1.0.jar')) {
+                        shelljs.exec('java -cp target/' + name + '-1.0.jar ' + groupID + '.Main');
+                    } else {
+                        console.log( chalk.red('\nThere is no file with the name ' + opt) + '. Make sure that you typed the name correctly and try again.' );
+                        return;
+                    }
+                }
+            });
+        });
 
     } else {
         console.log( chalk.red('Could not find a gradle file in this directory to build from.') );

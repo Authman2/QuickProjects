@@ -34,9 +34,6 @@ dependencies {
 
 	// Uncoment the line below for a project that uses the Kotlin programming language
     // compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    
-	// Uncomment the line below to include any external jars that you have
-	// compile files('path/to/external jar')
 }
 
 

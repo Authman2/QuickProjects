@@ -39,14 +39,13 @@ fs.outputFileSync('./'+projectName+'/src/main/c/main.c', template);
 
 
 // Create the build tool file.
-console.log( chalk.blue('Creating build.gradle file...') );
 const buildgradle_file = fs.readFileSync('/usr/local/var/QP/templateGradles/TGF_C.txt', 'UTF-8');
 fs.outputFileSync('./'+projectName+'/build.gradle', buildgradle_file);
 console.log( chalk.green('Generated build.gradle file!') );
 
 
 
-
+// Print finished message.
 console.log('\nFinished creating ' + chalk.magenta(projectName) + ' in ' + chalk.cyan('./' + projectName) );
 console.log('To run your application, navigate to your project folder with '
     + chalk.cyan('cd ' + projectName) + ',\nThen type ' + chalk.cyan('gradle build') + ' to build the project.');
