@@ -20,11 +20,23 @@ switch (command) {
         updateQP();
         break;
     
+
+    // Commands for running programs.
     case 'run-c':
         runC(mainFile);
         break;
+    case 'run-cpp':
+        runCpp();
+        break;
     case 'run-java':
         runJava(mainFile);
+        break;
+    case 'run-kot':
+        runKotlin();
+        break;
+    case 'run-kotlin':
+        runKotlin();
+        break;
     default:
         break;
 }
@@ -56,14 +68,14 @@ function printHelpCommands() {
     console.log('--------------------------------------------------------');
 
     console.log();
-    console.log( 'To create a new Java project, type ' + chalk.cyan('JavaProject ') + chalk.yellow('[project name]') + chalk.yellow('[maven or gradle]'));
+    console.log( 'To create a new Java project, type ' + chalk.cyan('JavaProject ') + chalk.yellow('[project name]') + chalk.yellow('[maven/gradle/makefile]'));
     console.log( '--> To create a new LWJGL project, type ' + chalk.cyan('LWJGLProject ') + chalk.yellow('[project name]') );
 
     console.log();
-    console.log( 'To create a new C project, type ' + chalk.cyan('CProject ') + chalk.yellow('[project name]') );
+    console.log( 'To create a new C project, type ' + chalk.cyan('CProject ') + chalk.yellow('[project name]') + chalk.yellow('[makefile/gradle]') );
 
     console.log();
-    console.log( 'To create a new C++ project, type ' + chalk.cyan('CppProject ') + chalk.yellow('[project name]') );
+    console.log( 'To create a new C++ project, type ' + chalk.cyan('CppProject ') + chalk.yellow('[project name]') + chalk.yellow('[makefile/gradle]') );
 
     console.log();
     console.log( 'To create a new Kotlin project, type ' + chalk.cyan('KotlinProject ') + chalk.yellow('[project name]') );
@@ -75,6 +87,7 @@ function printHelpCommands() {
     console.log('RUNNING JAVA PROJECTS: ');
     console.log('--------------------------------------------------------');
     console.log('--> Navigate to your project folder and type ' + chalk.cyan('QP run-java') + chalk.yellow(' [main file]') );
+    console.log('--> MAKEFILE: Navigate to your project folder and type, ' + chalk.cyan('make run'));
     console.log('--> MAVEN: Navigate to your project folder and type, ' + chalk.cyan('mvn package') + ', and then, ' + chalk.cyan('java -cp target/{PROJECT-NAME}-1.0.jar {PACKAGE-NAME}.{MAIN-FILE}'));
     console.log('--> GRADLE: Navigate to your project folder and type, ' + chalk.cyan('gradle run') + ', or ' + chalk.cyan('gradle jfxRun') + ' for javafx projects.');
 
@@ -87,6 +100,27 @@ function printHelpCommands() {
     console.log('--> Navigate to your project folder and type ' + chalk.cyan('QP run-c') + chalk.yellow(' [main file]') );
     console.log( chalk.magenta('Option 2:') );
     console.log('--> Type ' + chalk.cyan('gradle build') + ' then navigate to the build/exe/main folder and run your main file.');
+    console.log( chalk.magenta('Option 3:') );
+    console.log('--> Navigate to your project folder and type, ' + chalk.cyan('make run'));
+
+
+    console.log();
+    console.log();
+    console.log('--------------------------------------------------------');
+    console.log('RUNNING C++ PROJECTS: ');
+    console.log('--------------------------------------------------------');
+    console.log('Navigate to your project folder and type ' + chalk.cyan('QP run-cpp') );
+    console.log('Or, Navigate to your project folder and type, ' + chalk.cyan('make run'));
+
+
+
+    console.log();
+    console.log();
+    console.log('--------------------------------------------------------');
+    console.log('RUNNING KOTLIN PROJECTS: ');
+    console.log('--------------------------------------------------------');
+    console.log('Navigate to your project folder and type either ' + chalk.cyan('QP run-kot') + ', ' + chalk.cyan('QP run-kotlin') + ', or ' + chalk.cyan('gradle run') );
+
 
 
     console.log();
@@ -115,7 +149,15 @@ function printHelpCommands() {
 * @param {string} opt opt: The name of the main file.
 */
 function runC(opt) {
-    if(fs.existsSync('build.gradle')) {
+    if(fs.existsSync('Makefile')) {
+        // Just run the makefile's 'run' command, which should compile first.
+        shelljs.exec('make run');
+
+    }
+    else if(fs.existsSync('build.gradle')) {
+
+        // Build the project.
+        shelljs.exec('gradle build');
 
         // Run the project.
         if(opt !== null) {
@@ -129,6 +171,25 @@ function runC(opt) {
         } else {
             shelljs.exec('open ./build/exe/main/main');
         }
+
+    } else {
+        console.log( chalk.red('Could not find a gradle file in this directory to build from.') );
+        return;
+    }
+}
+
+
+/** Builds and runs a C++ project. */
+function runCpp() {
+    if(fs.existsSync('Makefile')) {
+        // Just run the makefile's 'run' command, which should compile first.
+        shelljs.exec('make run');
+
+    }
+    else if(fs.existsSync('build.gradle')) {
+
+        // Build the project.
+        shelljs.exec('gradle compileMain');
 
     } else {
         console.log( chalk.red('Could not find a gradle file in this directory to build from.') );
@@ -177,8 +238,28 @@ function runJava(opt = 'Main') {
             });
         });
 
+    } if(fs.existsSync('Makefile')) {
+        // Just run the makefile's 'run' command, which should compile first.
+        shelljs.exec('make run');
+
     } else {
         console.log( chalk.red('Could not find a gradle file in this directory to build from.') );
         return;
     }
+}
+
+
+
+
+/** Builds and runs a Kotlin project using gradle. */
+function runKotlin() {
+    if(fs.existsSync('build.gradle')) {
+        
+        // Build and run the project.
+        shelljs.exec('gradle run'); 
+
+    } else {
+        console.log( chalk.red('Could not find a gradle file in this directory to build from.') );
+        return;
+    }     
 }

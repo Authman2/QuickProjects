@@ -15,7 +15,7 @@ QuickProjects makes it easy to create basic project templates without the use of
 
 - Java: The default build tool is gradle, but you may use maven if you prefer.
 ```javascript
-JavaProject [project name] [gradle or maven]
+JavaProject [project name] [gradle/maven/makefile]
 ```
 - Light Weight Java Game Library: A quick-start template for LWJGL projects.
 ```javascript
@@ -23,11 +23,11 @@ LWJGLProject [project name]
 ```
 - C++: A basic C++ project using gradle as the build tool.
 ```javascript
-CppProject [project name]
+CppProject [project name] [makefile/gradle]
 ```
 - C: A template for a C project that uses gradle as the build tool.
 ```javascript
-CProject [project name]
+CProject [project name] [makefile/gradle]
 ```
 - Kotlin: A Kotlin project that comes with a starter template for a JavaFX application.
 ```javascript

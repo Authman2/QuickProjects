@@ -1,7 +1,7 @@
 //Uncomment the buildscript below to include Kotlin and JavaFX in your project
 /*
 buildscript {
-    ext.kotlin_version = '1.0.0'
+    ext.kotlin_version = '1.1.1'
     dependencies {
         classpath group: 'de.dynamicfiles.projects.gradle.plugins', name: 'javafx-gradle-plugin', version: '8.8.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
@@ -21,6 +21,9 @@ apply plugin: 'application'
 
 mainClassName = 'mainPackage.Main'
 
+defaultTasks 'run'
+
+
 // In this section you declare where to find the dependencies of your project
 repositories {
     mavenCentral()
@@ -35,36 +38,3 @@ dependencies {
 	// Uncoment the line below for a project that uses the Kotlin programming language
     // compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }
-
-
-jar {
-    from('src') {
-        include '/resources/*.png'
-		
-		// Below, you can include any files that you need to.
-		/*
-			include '/resources/maps/*.txt'
-			include '/resources/styles/*.css'
-		*/
-    }
-    into 'resources', {
-        from 'resources'
-
-		// Below, you can place resources into specific folders
-		/*
-			from 'resources/maps'
-			from 'resources/styles'
-		*/
-    }
-}
-
-// Uncomment the lines below for a javafx project
-/*
-jfx {
-    // minimal requirement for jfxJar-task
-    mainClass = 'mainPackage.Main'
-    
-    // minimal requirement for jfxNative-task
-    vendor = 'YourName'
-}
-*/

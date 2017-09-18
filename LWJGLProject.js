@@ -49,20 +49,20 @@ try {
 
 
 // Create the build.gradle file.
-const buildgradle_file = fs.readFileSync('/usr/local/var/QP/templateGradles/TGF_LWJGL.txt', 'UTF-8');
+const buildgradle_file = fs.readFileSync('/usr/local/lib/node_modules/quickprojects/templateGradles/TGF_LWJGL.txt', 'UTF-8');
 fs.outputFileSync('./'+projectName+'/build.gradle', buildgradle_file);
 console.log( chalk.green('\nGenerated build.gradle file!') );
 
 
 
 // Create the template java file, input manager, and mac runner classes.
-const javaTemplate = fs.readFileSync('/usr/local/var/QP/templateFiles/TLWJGLF.txt', 'UTF-8');
+const javaTemplate = fs.readFileSync('/usr/local/lib/node_modules/quickprojects/templateFiles/TLWJGLF.txt', 'UTF-8');
 fs.outputFileSync('./'+projectName+'/src/main/java/mainPackage/Main.java', javaTemplate);
 
-const inputTemplate = fs.readFileSync('/usr/local/var/QP/templateFiles/LWJGLInput.txt', 'UTF-8');
+const inputTemplate = fs.readFileSync('/usr/local/lib/node_modules/quickprojects/templateFiles/LWJGLInput.txt', 'UTF-8');
 fs.outputFileSync('./'+projectName+'/src/main/java/mainPackage/InputManager.java', inputTemplate);
 
-const MRTemplate = fs.readFileSync('/usr/local/var/QP/templateFiles/LWJGLMacRunner.txt', 'UTF-8');
+const MRTemplate = fs.readFileSync('/usr/local/lib/node_modules/quickprojects/templateFiles/LWJGLMacRunner.txt', 'UTF-8');
 fs.outputFileSync('./'+projectName+'/src/main/java/mainPackage/MacRunner.java', MRTemplate);
 
 

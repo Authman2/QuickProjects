@@ -1,0 +1,22 @@
+#####################
+# Variables
+#####################
+
+main='src/main/cpp/Main.cpp'
+
+
+#####################
+# Targets
+#####################
+
+default: compile
+
+compile:
+	test -d build || mkdir build
+	g++ ${main} -o build/Cpp_Executable
+
+run:	compile
+	build/Cpp_Executable
+
+clean:
+	rm -rf -R build

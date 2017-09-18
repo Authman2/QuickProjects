@@ -34,7 +34,7 @@ try {
 
 console.log( chalk.blue('\nCreating resources folder...') );
 try {
-    fs.ensureDirSync('./' + projectName + '/src/resources');
+    fs.ensureDirSync('./' + projectName + '/src/main/resources');
     console.log( chalk.green('Done creating resources folder!') );
 } catch(err) {
     console.log( chalk.red("ERROR: " + err) );
@@ -44,32 +44,26 @@ try {
 
 // Create the build tool file.
 if(buildTool == "maven") {
-    const buildgradle_file = fs.readFileSync('/usr/local/var/QP/templateFiles/TMavenF.txt', 'UTF-8');
-    fs.outputFileSync('./'+projectName+'/pom.xml', buildgradle_file);
+    const buildFile = fs.readFileSync('/usr/local/lib/node_modules/quickprojects/templateFiles/TMavenF.txt', 'UTF-8');
+    fs.outputFileSync('./'+projectName+'/pom.xml', buildFile);
     console.log( chalk.green('\nGenerated pom.xml file!') );
+
+} else if(buildTool == "makefile") {
+    const buildFile = fs.readFileSync('/usr/local/lib/node_modules/quickprojects/templateMakeFiles/TMF_Java.txt', 'utf8');
+    fs.outputFileSync('./' + projectName + '/Makefile', buildFile);
+    console.log( chalk.green('\nGenerated Makefile!') );
+
 } else {
-    const buildgradle_file = fs.readFileSync('/usr/local/var/QP/templateGradles/TGF_Java.txt', 'UTF-8');
-    fs.outputFileSync('./'+projectName+'/build.gradle', buildgradle_file);
+    const buildFile = fs.readFileSync('/usr/local/lib/node_modules/quickprojects/templateGradles/TGF_Java.txt', 'UTF-8');
+    fs.outputFileSync('./'+projectName+'/build.gradle', buildFile);
     console.log( chalk.green('\nGenerated build.gradle file!') );
 }
 
 
 // Create the template java file.
-const javaTemplate = fs.readFileSync('/usr/local/var/QP/templateFiles/TJF.txt', 'UTF-8');
+const javaTemplate = fs.readFileSync('/usr/local/lib/node_modules/quickprojects/templateFiles/TJF.txt', 'UTF-8');
 fs.outputFileSync('./'+projectName+'/src/main/java/mainPackage/Main.java', javaTemplate);
 
 
 console.log('\nFinished creating ' + chalk.magenta(projectName) + ' in ' + chalk.cyan('./' + projectName) );
-
-if(buildTool == 'maven') {
-
-    console.log('To run your application, navigate to your project folder with '
-        + chalk.cyan('cd ' + projectName) + ',');
-    console.log('Then type ' + chalk.cyan('java -cp target/' + projectName + '-1.0.jar mainPackage.Main'));
-
-} else {
-    console.log('To run your application, navigate to your project folder with '
-        + chalk.cyan('cd ' + projectName) + ',');
-    console.log('Then type ' + chalk.cyan('gradle run') 
-        + ' or, for javaFX projects, ' + chalk.cyan('gradle jfxRun') );
-}
+console.log('Type ' + chalk.cyan('QP help') + ' to learn how to run your application.');

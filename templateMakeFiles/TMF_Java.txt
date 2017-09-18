@@ -1,0 +1,24 @@
+#####################
+# Variables
+#####################
+
+# this assumes the path starts with 'build'
+main='mainPackage/Main'
+
+
+#####################
+# Targets
+#####################
+
+default: compile
+
+compile:
+	test -d build || mkdir build
+	javac -d build src/main/java/mainPackage/Main.java
+	cp -R src/main/resources build
+
+run:	compile
+	java -classpath build ${main}
+
+clean:
+	rm -rf -R build

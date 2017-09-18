@@ -6,9 +6,11 @@ var fs = require('fs-extra');
 
 // The command line argument for the project name
 var projectName = process.argv[2] || 'MyCppProject';
+var buildTool = process.argv[3] || "makefile";
 
 
 // Tell the user that the project is being created.
+console.log();
 console.log('Creating a new C++ project named ' + chalk.magenta(projectName) );
 
 
@@ -44,15 +46,20 @@ try {
 
 
 
-// Create the build.gradle file.
-const buildgradle_file = fs.readFileSync('/usr/local/var/CPT/templateGradles/TGF_Cpp.txt', 'UTF-8');
-fs.outputFileSync('./'+projectName+'/build.gradle', buildgradle_file);
-console.log( chalk.green('Generated build.gradle file!\n') );
-
+// Create the build file.
+if(buildTool == "gradle") {
+    const buildgradle_file = fs.readFileSync('/usr/local/lib/node_modules/quickprojects/templateGradles/TGF_Cpp.txt', 'UTF-8');
+    fs.outputFileSync('./'+projectName+'/build.gradle', buildgradle_file);
+    console.log( chalk.green('Generated build.gradle file!\n') );
+} else {
+    const buildFile = fs.readFileSync('/usr/local/lib/node_modules/quickprojects/templateMakeFiles/TMF_Cpp.txt', 'UTF-8');
+    fs.outputFileSync('./'+projectName+'/Makefile', buildFile);
+    console.log( chalk.green('Generated Makefile!\n') );
+}
 
 
 // Create the template java file.
-const template = fs.readFileSync('/usr/local/var/CPT/templateFiles/TCPPF.txt', 'UTF-8');
+const template = fs.readFileSync('/usr/local/lib/node_modules/quickprojects/templateFiles/TCPPF.txt', 'UTF-8');
 fs.outputFileSync('./'+projectName+'/src/main/cpp/Main.cpp', template);
 
 
@@ -61,5 +68,4 @@ fs.outputFileSync('./'+projectName+'/src/main/cpp/Main.cpp', template);
 
 // Show finished description.
 console.log('\nFinished creating ' + chalk.magenta(projectName) + ' in ' + chalk.cyan('./' + projectName) );
-console.log('To run your application, navigate to your project folder with '
-    + chalk.cyan('cd ' + projectName) + ',then type ' + chalk.cyan('gradle run') );
+console.log('Type ' + chalk.cyan('QP help') + ' to learn how to run your application.');

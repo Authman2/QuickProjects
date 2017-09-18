@@ -3,9 +3,11 @@
 'use strict';
 var chalk = require('chalk');
 var fs = require('fs-extra');
+var shell = require('shelljs');
 
 // The command line argument for the project name
 var projectName = process.argv[2] || 'MyCProject';
+var buildTool = process.argv[3] || "makefile";
 
 
 // Tell the user that the project is being created.
@@ -25,6 +27,9 @@ try {
 // Create the source folder.
 console.log( chalk.blue('Creating src folder...') );
 try {
+    fs.ensureDirSync('./' + projectName + '/src/main/headers');
+    console.log( chalk.green('Done creating header files folder!') );
+    
     fs.ensureDirSync('./' + projectName + '/src/main/c');
     console.log( chalk.green('Done creating source folder!\n') );
 } catch(err) {
@@ -34,19 +39,23 @@ try {
 
 
 // Create the template c file.
-const template = fs.readFileSync('/usr/local/var/QP/templateFiles/TCF.txt', 'UTF-8');
+const template = fs.readFileSync('/usr/local/lib/node_modules/quickprojects/templateFiles/TCF.txt', 'UTF-8');
 fs.outputFileSync('./'+projectName+'/src/main/c/main.c', template);
 
 
 // Create the build tool file.
-const buildgradle_file = fs.readFileSync('/usr/local/var/QP/templateGradles/TGF_C.txt', 'UTF-8');
-fs.outputFileSync('./'+projectName+'/build.gradle', buildgradle_file);
-console.log( chalk.green('Generated build.gradle file!') );
-
+if(buildTool == "gradle") {
+	const buildgradle_file = fs.readFileSync('/usr/local/lib/node_modules/quickprojects/templateGradles/TGF_C.txt', 'UTF-8');
+	fs.outputFileSync('./'+projectName+'/build.gradle', buildgradle_file);
+	console.log( chalk.green('Generated build.gradle file!') );
+} else {
+	const buildFile = fs.readFileSync('/usr/local/lib/node_modules/quickprojects/templateMakeFiles/TMF_C.txt', 'utf8');
+    fs.outputFileSync('./' + projectName + '/Makefile', buildFile);
+    console.log( chalk.green('Generated Makefile!') );
+}
 
 
 // Print finished message.
 console.log('\nFinished creating ' + chalk.magenta(projectName) + ' in ' + chalk.cyan('./' + projectName) );
-console.log('To run your application, navigate to your project folder with '
-    + chalk.cyan('cd ' + projectName) + ',\nThen type ' + chalk.cyan('gradle build') + ' to build the project.');
-console.log('To run the project, either type ' + chalk.cyan('QP run-c') + chalk.yellow(' [main file]') + ' or navigate to the build/exe/main folder and run your main file.');
+console.log('Type ' + chalk.cyan('QP help') + ' to learn how to run your application.');
+

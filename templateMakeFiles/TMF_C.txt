@@ -1,0 +1,22 @@
+#####################
+# Variables
+#####################
+
+main='src/main/c/main.c'
+
+
+#####################
+# Targets
+#####################
+
+default: compile
+
+compile:
+	test -d build || mkdir build
+	gcc -Wall -g -o build/C_Executable ${main}
+
+run:	compile
+	build/C_Executable
+
+clean:
+	rm -rf -R build

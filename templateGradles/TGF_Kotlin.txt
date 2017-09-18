@@ -1,48 +1,40 @@
-//Uncomment the buildscript below to include Kotlin and JavaFX in your project
-
 buildscript {
-    ext.kotlin_version = '1.0.0'
-    dependencies {
-        classpath group: 'de.dynamicfiles.projects.gradle.plugins', name: 'javafx-gradle-plugin', version: '8.8.2'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-    }
+    ext.kotlin_version = '1.1.1'
+
     repositories {
         mavenLocal()
         mavenCentral()
     }
+
+    dependencies {
+        // Uncomment for JavaFX
+        //classpath group: 'de.dynamicfiles.projects.gradle.plugins', name: 'javafx-gradle-plugin', version: '8.8.2'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
 }
 
-// Apply the java plugin to add support for Java
-apply plugin: 'java'
+
 apply plugin: 'application'
-apply plugin: 'kotlin'
-apply plugin: 'kotlin2js'
-apply plugin: 'javafx-gradle-plugin'
+apply plugin: "kotlin"
+//apply plugin: "kotlin2js"
+//apply plugin: 'com.android.application'
+//apply plugin: 'kotlin-android'
+//apply plugin: 'javafx-gradle-plugin'
+
+mainClassName = 'MainKt'
+defaultTasks 'run'
+//defaultTasks 'jfxRun'
 
 
-mainClassName = 'Main'
-defaultTasks 'jfxRun'
-
-
-// In this section you declare where to find the dependencies of your project
 repositories {
     mavenCentral()
 }
 
-
-// In this section you declare the dependencies for your production and test code
 dependencies {
-	// Uncomment the line below for a project that uses MongoDB
-    // compile 'org.mongodb:mongodb-driver:3.4.2'
-
-	// Uncoment the line below for a project that uses the Kotlin programming language
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    compile "org.jetbrains.kotlin:kotlin-stdlib-js:$kotlin_version"
-    
-	// Uncomment the line below to include any external jars that you have
-	// compile files('path/to/external jar')
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
+    //compile "org.jetbrains.kotlin:kotlin-stdlib-js"
 }
-
 
 jar {
     from('src') {
@@ -66,11 +58,10 @@ jar {
 }
 
 // Uncomment the lines below for a javafx project
-
-jfx {
-    // minimal requirement for jfxJar-task
-    mainClass = 'Main'
-    
-    // minimal requirement for jfxNative-task
-    vendor = 'YourName'
-}
+//jfx {
+//    // minimal requirement for jfxJar-task
+//    mainClass = 'Main'
+//    
+//    // minimal requirement for jfxNative-task
+//    vendor = 'YourName'
+//}
