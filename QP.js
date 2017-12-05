@@ -12,7 +12,7 @@ var cppProject = require('./CppProject');
 var javaProject = require('./JavaProject');
 var kotlinProject = require('./KotlinProject');
 var lwjglProject = require('./LWJGLProject');
-
+var exprProject = require('./ExpressProject');
 
 
 var command = process.argv[2] || 'help';
@@ -46,6 +46,9 @@ else {
             case '--lwjgl':
                 _createLWJGLProject(projectName);
                 break;
+            case '--express':
+                _createExpressProject(projectName);
+                break;
         }
 
         return;
@@ -53,7 +56,7 @@ else {
         console.log( chalk.red('ERROR!') );
         console.log();
         console.log('When creating a new project you must specify the type using the following form:');
-        console.log( chalk.yellow('qp [project name] --[java/c/cpp/kotlin/lwjgl] --[gradle/maven/make]') );
+        console.log( chalk.yellow('qp [project name] --[java/c/cpp/kotlin/lwjgl/express] --[gradle/maven/make]') );
         console.log();
 
         return;
@@ -96,17 +99,17 @@ function printHelpCommands() {
 
     console.log();
     console.log('To create a project using QuickProjects, follow the commands below:');
-    console.log( chalk.yellow('qp [project name] --[java/c/cpp/kotlin/lwjgl] --[gradle/maven/make]') );
+    console.log( chalk.yellow('qp [project name] --[java/c/cpp/kotlin/lwjgl/express] --[gradle/maven/makefile]') );
     console.log();
 
 
     console.log();
     console.log();
     console.log('--------------------------------------------------------');
-    console.log('RUNNING JAVA PROJECTS: ');
+    console.log('RUNNING JAVA/LWJGL PROJECTS: ');
     console.log('--------------------------------------------------------');
-    console.log('--> MAKEFILE: Navigate to your project folder and type, ' + chalk.cyan('make run'));
-    console.log('--> MAVEN: Navigate to your project folder and type, ' + chalk.cyan('mvn package') + ', and then, ' + chalk.cyan('java -cp target/{PROJECT-NAME}-1.0.jar {PACKAGE-NAME}.{MAIN-FILE}'));
+    console.log('--> MAKEFILE (not for LWJGL): Navigate to your project folder and type, ' + chalk.cyan('make run'));
+    console.log('--> MAVEN (not for LWJGL): Navigate to your project folder and type, ' + chalk.cyan('mvn package') + ', and then, ' + chalk.cyan('java -cp target/{PROJECT-NAME}-1.0.jar {PACKAGE-NAME}.{MAIN-FILE}'));
     console.log('--> GRADLE: Navigate to your project folder and type, ' + chalk.cyan('gradle run') + ', or ' + chalk.cyan('gradle jfxRun') + ' for javafx projects.');
 
     console.log();
@@ -128,7 +131,6 @@ function printHelpCommands() {
     console.log('Navigate to your project folder and type, ' + chalk.cyan('make run'));
 
 
-
     console.log();
     console.log();
     console.log('--------------------------------------------------------');
@@ -136,6 +138,14 @@ function printHelpCommands() {
     console.log('--------------------------------------------------------');
     console.log('Navigate to your project folder and type ' + chalk.cyan('gradle run') );
 
+
+    console.log();
+    console.log();
+    console.log('--------------------------------------------------------');
+    console.log('RUNNING EXPRESS PROJECTS: ');
+    console.log('--------------------------------------------------------');
+    console.log('Navigate to your project folder and type ' + chalk.cyan('npm install') );
+    console.log('Then type ' + chalk.cyan('npm start') );
 
 
     console.log();
@@ -180,4 +190,9 @@ function _createKotlinProject(projectName) {
 /** Creates a LWJGL Project. */
 function _createLWJGLProject(projectName) {
     lwjglProject.createLWJGL(projectName);
+}
+
+/** Creates an ExpressJS Project. */
+function _createExpressProject(projectName) {
+    exprProject.createExpress(projectName);
 }
