@@ -46,8 +46,8 @@ module.exports = {
 
 
         // Create the template python file.
-        const javaTemplate = fs.readFileSync('/usr/local/lib/node_modules/quickprojects/templateFiles/TPythonF.txt', 'UTF-8');
-        fs.outputFileSync('./'+projectName+'/src/app.py', javaTemplate);
+        const pythonTemplate = fs.readFileSync('/usr/local/lib/node_modules/quickprojects/templateFiles/TPythonF.txt', 'UTF-8');
+        fs.outputFileSync('./'+projectName+'/src/app.py', pythonTemplate);
 
 
         console.log('\nFinished creating ' + chalk.magenta(projectName) + ' in ' + chalk.cyan('./' + projectName) );

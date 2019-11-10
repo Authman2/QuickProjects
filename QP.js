@@ -50,7 +50,7 @@ else {
             case '--express':
                 _createExpressProject(projectName);
                 break;
-            case '--python', 'py':
+            case '--python':
                 _createPythonProject(projectName);
                 break;
         }
