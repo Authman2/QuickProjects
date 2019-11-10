@@ -13,4 +13,4 @@ main='src/app'
 default: run
 
 run:
-	{python_version} {main}
+	${python_version} ${main}

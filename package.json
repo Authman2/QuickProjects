@@ -1,6 +1,6 @@
 {
   "name": "quickprojects",
-  "version": "1.5.3",
+  "version": "1.5.4",
   "description": "QuickProjects makes it easy to create templates for programming projects without having to use an IDE.",
   "main": "QP.js",
   "scripts": {
