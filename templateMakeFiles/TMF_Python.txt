@@ -3,7 +3,7 @@
 #####################
 
 python_version=python3
-main='src/app'
+main='src/app.py'
 
 
 #####################
