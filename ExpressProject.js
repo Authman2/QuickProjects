@@ -54,7 +54,9 @@ module.exports = {
                 version: 'project-version',
                 description: 'project-description',
                 main: 'index.js',
-                scripts: {},
+                scripts: {
+                    "start": "node index.js"
+                },
                 keywords: [],
                 author: 'project-author',
                 licence: 'MIT',

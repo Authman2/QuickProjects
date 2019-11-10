@@ -1,0 +1,16 @@
+#####################
+# Variables
+#####################
+
+python_version=python3
+main='src/app'
+
+
+#####################
+# Targets
+#####################
+
+default: run
+
+run:
+	{python_version} {main}

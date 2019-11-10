@@ -14,7 +14,7 @@ npm install -g quickprojects
 QuickProjects makes it easy to create basic project templates without the use of an IDE. If you ever need help, just type the command 'QP help'. Refer to the list below for instructions on how to create different projects.
 
 ```javascript
-QP [project name] --[c/cpp/java/kotlin/lwjgl/express] --[gradle/maven/makefile]
+QP [project name] --[c/cpp/java/kotlin/lwjgl/express/python] --[gradle/maven/makefile]
 ```
 
 

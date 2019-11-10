@@ -13,6 +13,7 @@ var javaProject = require('./JavaProject');
 var kotlinProject = require('./KotlinProject');
 var lwjglProject = require('./LWJGLProject');
 var exprProject = require('./ExpressProject');
+var pyProject = require('./PythonProject');
 
 
 var command = process.argv[2] || 'help';
@@ -48,6 +49,9 @@ else {
                 break;
             case '--express':
                 _createExpressProject(projectName);
+                break;
+            case '--python', 'py':
+                _createPythonProject(projectName);
                 break;
         }
 
@@ -151,6 +155,14 @@ function printHelpCommands() {
     console.log();
     console.log();
     console.log('--------------------------------------------------------');
+    console.log('RUNNING PYTHON PROJECTS: ');
+    console.log('--------------------------------------------------------');
+    console.log('Navigate to your project folder and type ' + chalk.cyan('make run') );
+
+
+    console.log();
+    console.log();
+    console.log('--------------------------------------------------------');
     console.log('COMMANDS: ');
     console.log('--------------------------------------------------------');
     console.log('For help, type ' + chalk.cyan('QP help'));
@@ -195,4 +207,9 @@ function _createLWJGLProject(projectName) {
 /** Creates an ExpressJS Project. */
 function _createExpressProject(projectName) {
     exprProject.createExpress(projectName);
+}
+
+/** Creates a Python Project. */
+function _createPythonProject(projectName) {
+    pyProject.createPython(projectName);
 }

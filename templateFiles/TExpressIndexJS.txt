@@ -3,14 +3,16 @@ const app = express();
 const path = require('path');
 const fs = require('fs');
 
-// Setup the roots
+// Setup to use ejs as the view engine and the source folder for static files.
 app.set('view engine', 'ejs');
+app.use(express.static(__dirname + '/src/'));
 
+// Setup the roots
 app.get('/', (req, res) => {
     res.render('pages/Home');
 });
 
 
 app.listen(8080, () => {
-    console.log('App Running!');
+    console.log('App Running at localhost:8080!');
 })
